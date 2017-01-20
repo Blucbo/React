@@ -34,16 +34,42 @@
         {"id":20,"name":"Stim","img":"https://robohash.org/magnamanimiaperiam.png?size=200x200&set=set1","cost":"645.49","description":"In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.","presence":false}
       ]
       var Product = React.createClass({
+          getInitialState: function(){
+            return {isSelected: false};
+          },
+          handleClick: function(){
+            this.setState({
+              isSelected: !this.state.isSelected
+            })
+          },
           render: function() {
-              return (
-                  <li className="product">
-                      <img className="product-image" src={this.props.img} />
-                      <div className="poduct-info">
-                          <div className="product-name"> {this.props.name} </div>
-                          <div className="product-cost"> {this.props.cost} </div>
-                      </div>
-                  </li>
-              );
+          console.log(this.state.isSelected);
+          let block;
+          if(this.state.isSelected){
+            block = (
+              <li className="product"  onClick={this.handleClick}>
+                <img className="product-image" src={this.props.img} />
+                <div className="poduct-info">
+                    <div className="product-name"> {this.props.name} </div>
+                    <div className="product-cost"> {this.props.cost} </div>
+                    <div className="product-description"> {this.props.description} </div>
+                    <div className="product-presence"> {this.props.presence} </div>
+                </div>
+              </li>
+            );
+          }else{
+            block = (
+              <li className="product"  onClick={this.handleClick}>
+                <img className="product-image" src={this.props.img} />
+                <div className="poduct-info">
+                    <div className="product-name"> {this.props.name} </div>
+                    <div className="product-cost"> {this.props.cost} </div>
+                </div>
+              </li>
+            );
+          }
+                  return block;
+
           }
       });
 
@@ -77,6 +103,8 @@
                                       name={el.name}
                                       cost={el.cost}
                                       img={el.img}
+                                      description={el.description}
+                                      presence={el.presence}
                                   />;
                              })
                           }
