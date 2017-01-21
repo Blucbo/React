@@ -6,6 +6,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <script data-require="jquery@3.0.0" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+    <link data-require="bootstrap@*" data-semver="4.0.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+    <!-- <script data-require="bootstrap@*" data-semver="4.0.5" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id='main'></div>
@@ -43,33 +47,19 @@
             })
           },
           render: function() {
-          console.log(this.state.isSelected);
-          let block;
-          if(this.state.isSelected){
-            block = (
-              <li className="product"  onClick={this.handleClick}>
-                <img className="product-image" src={this.props.img} />
-                <div className="poduct-info">
-                    <div className="product-name"> {this.props.name} </div>
-                    <div className="product-cost"> {this.props.cost} </div>
-                    <div className="product-description"> {this.props.description} </div>
-                    <div className="product-presence"> {this.props.presence} </div>
+           return  (
+              <div className="col-sm-4 col-md-3" onClick={this.handleClick} >
+                <div className="thumbnail">
+                  <img className={this.state.isSelected ? 'product-image' : ''} src={this.props.img} />
+                  <div className="caption">
+                    <h3 className="product-name">{this.props.name}</h3>
+                    <p className="product-description">{this.state.isSelected ? this.props.description : ""} </p>
+                    <p className="product-presence" className={this.props.presence}> {this.state.isSelected ? this.props.presence ? 'In stock' : 'Under the order' : ''} </p>
+                    <p className="product-cost "> {this.props.cost} </p>
+                  </div>
                 </div>
-              </li>
+              </div>
             );
-          }else{
-            block = (
-              <li className="product"  onClick={this.handleClick}>
-                <img className="product-image" src={this.props.img} />
-                <div className="poduct-info">
-                    <div className="product-name"> {this.props.name} </div>
-                    <div className="product-cost"> {this.props.cost} </div>
-                </div>
-              </li>
-            );
-          }
-                  return block;
-
           }
       });
 
@@ -94,8 +84,13 @@
           render: function() {
               return (
                   <div className="products">
-                      <input type="text" placeholder="Search" className="search-field" onChange={this.handleSearch} />
-                      <ul className="product-list">
+                  <form className="form-inline">
+                    <div className="form-group">
+                      <input type="text" className="form-control" id="exampleInputName2" placeholder="Search" onChange={this.handleSearch} />
+                    </div>
+                  </form>
+
+                      <div className="row">
                           {
                              this.state.displayedProducts.map(function(el) {
                                   return <Product
@@ -108,7 +103,7 @@
                                   />;
                              })
                           }
-                      </ul>
+                          </div>
                   </div>
               );
           }
